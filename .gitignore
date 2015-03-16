@@ -5,6 +5,32 @@ Desktop.ini
 
 #C++
 
+# Visual Studio 2013 Solution
+Bin/
+bin/
+*.sln
+*.sdf
+*.suo
+*.opensdf
+*.obj
+*.pdb
+*.log
+*.tlog
+*.lastbuildstate
+*.ipch
+*.lib
+*.txt
+*.vcxproj
+*.filters
+*.user
+*.docx
+*.dll
+*.exp
+*.ilk
+*.idb
+
+
+
 # Compiled Object files
 *.slo
 *.lo
