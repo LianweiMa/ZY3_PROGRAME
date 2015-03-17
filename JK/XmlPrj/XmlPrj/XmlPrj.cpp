@@ -241,7 +241,7 @@ int CXmlPrj::LoadPrj(const char* sXmlPN){
 		strcpy(pN, "_Save.gcp");	sprintf(pS, "/AT/ATMCH/%s", strNam);	strcpy(m_sGCPPN, strPath);
 		strcpy(pN, "_Tie.bpc");	sprintf(pS, "/AT/ATMCH/%s", strNam);	strcpy(m_sBPCPN, strPath);
 		strcpy(pS, "/Product/AT/");	strcpy(m_sMchDir, strPath);
-		sprintf(m_sAdjReportPN, pXml->m_strProductSpace,"Calibration/OptimizedResultData/MultiResolution/calibResult.txt");
+		sprintf(m_sAdjReportPN,"%s%s", pXml->m_strProductSpace,"Calibration/OptimizedResultData/MultiResolution/calibResult.txt");
 
 	}
 	else

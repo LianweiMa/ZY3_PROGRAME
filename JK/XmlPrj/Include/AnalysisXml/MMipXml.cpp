@@ -4,8 +4,6 @@
 #include "ZY3FileName.h"
 #include "file_operation.hpp"
 
-//解析新订单中的地理坐标信息//并在相应的文件夹下生成gcd文件
-//bool IsProdGeoSys;
 int CMMIPXml::GenGeographicInfo(bool IsProdGeoSys)//只要找到<GeographicReference>字段且XML的main position位于<GeographicReference>字段即可
 {
 	GeoRef geoRef; char strDescType[512], strGeoVal[512];
@@ -494,29 +492,6 @@ int CMMIPXml::AnalysisImport()
 
 int CMMIPXml::AnalysisExport()
 {
-	/*char strOutPath[MAX_PATHNAME] = "";	char strTmp[256];
-	{
-		char inifilepath[512];
-		if (GetPrivateProfilePath(inifilepath, CONFIG_FILE)) {//首先找到FlowControl.ini文件
-			GetPrivateProfileString("PathSetting", "linuxpath", "", strOutPath, 256, inifilepath); VERF_SLASH(strOutPath);//获取linuxpath
-			if (!IsExist(strOutPath))  { GetPrivateProfileString("PathSetting", "windowspath", "", strOutPath, 256, inifilepath); VERF_SLASH(strOutPath); }//linuxpath不存在时,获取windowspath
-			if (!IsExist(strOutPath))  strcpy(strOutPath, "");	else strcat(strOutPath, "/"); //若windowspath也不存在,则将strOutPath置空
-		}
-		strcpy(m_strProductSpace, strOutPath);	strcpy(m_strProcessSpace, strOutPath);
-
-		if (!FindNode(Mode_Absolute, strTmp, 6, "root", "content", "ProductiveTaskItemList", "ProductiveTaskItemInfo", "OutputData", "ProductPath"))
-		{
-			ErrorPrint("%s", GetXmlError());	return ERR_FILE_READ;
-		}
-		strcat(strOutPath, strTmp);	strcat(m_strProductSpace, strTmp);
-		if (!FindNode(Mode_Absolute, strTmp, 6, "root", "content", "ProductiveTaskItemList", "ProductiveTaskItemInfo", "OutputData", "ProcessOutPath"))
-		{
-			ErrorPrint("%s", GetXmlError());	return ERR_FILE_READ;
-		}
-		strcat(m_strProcessSpace, strTmp);
-		AddEndSlash(m_strProcessSpace);		AddEndSlash(m_strProductSpace);
-	}
-	AddEndSlash(strOutPath);*/
 	char strOutPath[MAX_PATHNAME];
 	sprintf(strOutPath, "%s",m_strProductSpace);
 	int i, num;	SceneInfo* scInf = m_scList.GetData(num);
@@ -529,8 +504,6 @@ int CMMIPXml::AnalysisExport()
 	if (tskType&TSK_ATMCH){
 	}
 	if (tskType&TSK_ATADJ){
-		//		strcpy(m_importEx[i].strAdjRpcNam, "");
-		//输出的RPC
 		int inputNum=m_import.GetSize();
 		ImgExInfo exInfo;	memset(&exInfo, 0, sizeof(ImgExInfo));
 		char strAdjRpcFile[MAX_PATHNAME];
@@ -539,15 +512,11 @@ int CMMIPXml::AnalysisExport()
 			char strTemp[MAX_PATHNAME];
 			strcpy(strTemp, m_import.GetAt(i).path);
 			
-			char *pT = strrchr(strTemp, '.');sprintf(pT, "%s", "_rpc.txt");
-			//pT = strstr(strTemp, m_strPathSetting);
-			
+			char *pT = strrchr(strTemp, '.');sprintf(pT, "%s", "_rpc.txt");	
 			sprintf(strAdjRpcFile, "%s%s%s", m_strProductSpace, "Calibration/OptimizedResultData/MultiResolution/", strTemp + strlen(m_strPathSetting));
 			strcpy(exInfo.strAdjRpcNam, strAdjRpcFile);
 			m_importEx.Append(exInfo);
 		}
-		//输出的平差报告
-		//sprintf(m_strAdjReportPN, "%s%s",m_strProductSpace,"Calibration/OptimizedResultData/MultiResolution/calibResult.txt");
 	}
 	if (tskType&TSK_IMGEPI){
 		LPIMAGEINF	pImgF, pImgN, pImgB;
@@ -602,8 +571,6 @@ int CMMIPXml::AnalysisExport()
 			pImgC = m_scList.GetImage(i, IL_SC, CT_MUX);
 			pDSM = m_scList.GetImage(i, IL_DSM);
 			pDEM = m_scList.GetImage(i, IL_DEM);
-
-			
 
 			if (pImgN) pImg = pImgN; else if (pImgF) pImg = pImgF; else if (pImgB) pImg = pImgB;	else if (!pImgC) continue;
 			if (pDSM) pTer = pDSM; else if (pDEM) pTer = pDEM;
@@ -775,7 +742,7 @@ int CMMIPXml::AnalyzeMipPar(LPCSTR lpstrPath)
 
 	return ERR_NONE;
 }
-//CMMIPXml::GetStatusPath需要修改
+
 bool CMMIPXml::GetStatusPath(LPCSTR lpstrJobXmlPath, LPCSTR lpstrDefPath, char* strStatusPath)
 {
 	char strDef[512], strRelPath[256];	strcpy(strDef, lpstrDefPath);
@@ -871,7 +838,7 @@ bool CMMIPXml::WriteStatusXml(LPCSTR lpstrJobXmlPath, LPCSTR lpstrRetXmlPath/* =
 
 	return true;
 }
-//CMMIPXml::Save需要修改
+
 int CMMIPXml::Save(LPCSTR lpstrPath)
 {
 	if (!Open(lpstrPath))
@@ -967,5 +934,4 @@ void PrintLog(const char *pPN, int code, const char *pMsg)
 
 	xml.Save(pPN);
 }
-
 #endif

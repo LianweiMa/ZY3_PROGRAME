@@ -33,6 +33,11 @@
 #include <time.h>
 #include <math.h>
 
+#ifndef MAX_PATHNAME
+#define  MAX_PATHNAME 512
+#endif // !MAX_PATHNAME
+
+
 //#define	 PRJ_TAG_V1		"MIP_PRJ_V1.0"
 #define	 PRJ_TAG_V2		"MIP_PRJ_V2.0"
 
@@ -240,14 +245,11 @@ public:
 	int		InitImgInfoByNam(ImgInfo* imginf);
 	int		ReadImgMeta(const char* sImgMetaPN, ImgInfo* pInFile);
 	void 	SaveRetXml(const char* lpExe, const char* lpXml = NULL, bool bRunOk = true, const char* lpMsg = NULL);
-	void	SaveTskHdr2Bin(TskHdr& thdr);
-	// 	void	RemoveXmlBin(const char* lpStrXml);
+	void	    SaveTskHdr2Bin(TskHdr& thdr);
 
 protected:
 	void	FreeTskInfo();
 	int		Check();
-	// 	int		LoadXmlBin(const char* lpStr);
-	// 	void	SaveXmlBin(const char* lpStr);
 
 public:
 	TskHdr			m_tHdr;
@@ -267,6 +269,7 @@ public:
 
 	CArray_SCENEINF m_scList;
 	XML_Type		m_prjXMLAttrib;
+
 protected:
 
 };

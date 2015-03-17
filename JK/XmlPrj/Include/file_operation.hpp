@@ -37,7 +37,7 @@ namespace mlw
 		for (i = 0; i < len; i++){ if (strCmd[i] == '/') strCmd[i] = '\\'; }
 	}
 	void Dos2Unix(char *strCmd){ int i, len = strlen(strCmd); for (i = 0; i < len; i++){ if (strCmd[i] == '\\') strCmd[i] = '/'; } }
-	//在路径末尾加斜线
+
 	inline char* AddEndSlash(char *strPN){
 		if (strlen(strPN) < 1) return NULL;
 		char* pS = strPN + strlen(strPN) - 1;
